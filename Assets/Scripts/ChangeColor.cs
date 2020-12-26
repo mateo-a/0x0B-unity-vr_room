@@ -12,9 +12,12 @@ public class ChangeColor : MonoBehaviour
     void Start()
     {
         originalRender = GetComponent<Renderer>();
-        // originalMaterial = GetComponent<Renderer>().material;
         originalColor = GetComponent<Renderer>().material.color;
-
+        // originalColor = GetComponent<Renderer>().material.GetColor();
+    }
+    public void Yellow()
+    {
+        GetComponent<Renderer>().material.color = Color.blue;
     }
     public void Red()
     {

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ObjectInteract : MonoBehaviour
 {
@@ -6,12 +8,15 @@ public class ObjectInteract : MonoBehaviour
     public Transform hand;
     private Camera main;
     public float distance = 3f;
+    public ItemData itemData;
+
 
     public void Interact()
     {
         if (Vector3.Distance(character.position, transform.position) <= distance)
         {
-            if (hand.childCount == 0)
+            // Destroy(gameObject);
+            if (hand.childCount < 5)
             {
                 Pickup();
             }
@@ -19,15 +24,18 @@ public class ObjectInteract : MonoBehaviour
             {
                 Swap();
             }
+
         }
         else
         {
             Debug.Log("Out of Range");
         }
+
     }
 
     void Pickup()
     {
+        FindObjectOfType<InventoryControl>().AddItem(itemData);
         // Kinematic
         GetComponent<Rigidbody>().isKinematic = true;
         transform.position = hand.position;
@@ -36,6 +44,7 @@ public class ObjectInteract : MonoBehaviour
 
     void Swap()
     {
+        FindObjectOfType<InventoryControl>().SwapItem(itemData);
         Transform dropping = hand.GetChild(0);
         dropping.position = transform.position;
         dropping.parent = null;
